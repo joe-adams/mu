@@ -1,3 +1,6 @@
 .idea/
 target/
 mu.iml
+.classpath
+.project
+.settings/

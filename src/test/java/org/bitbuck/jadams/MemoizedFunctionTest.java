@@ -3,7 +3,6 @@ package org.bitbuck.jadams;
 import org.junit.Test;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
