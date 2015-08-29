@@ -10,15 +10,29 @@ import java.util.stream.Collector;
  */
 public class GroupByCollector {
 
-    final private static Set<Collector.Characteristics> characteristics= EnumSet.of(Collector.Characteristics.UNORDERED, Collector.Characteristics.IDENTITY_FINISH);
 
-    public static <K,V> Collector<V, Map<K,List<V>>,Map<K,List<V>>> get(Function<V,K> mapFunction){
+    public static <K,V> Collector<V, ?,Map<K,List<V>>> groupBy(Function<V, K> mapFunction){
+        return getBuilder(mapFunction).build();
+    }
+
+    /*public static <K,V> Collector<V, ?,Map<K,Integer>> countBy(Function<V, K> mapFunction){
+        Map m=new HashMap<>();
+
+        return getBuilderNoFinisher(mapFunction)
+                .setFinisher((map) -> {
+                    m
+                })
+                .build();
+    }*/
+
+    public static <K,V> MuCollecterImpl.Builder getBuilder(Function<V,K> mapFunction){
         return new MuCollecterImpl.Builder<V, Map<K,List<V>>,Map<K,List<V>>>()
                 .setAccumulator(accumulator(mapFunction))
-                .setCharacteristics(characteristics)
+                .setSupplier(HashMap::new)
                 .setCombiner(GroupByCollector::combiner)
                 .setFinisher(Function.identity())
-                .setSupplier(HashMap::new).build();
+                .addCharacteristic(Collector.Characteristics.IDENTITY_FINISH)
+                .addCharacteristic(Collector.Characteristics.UNORDERED);
     }
 
 

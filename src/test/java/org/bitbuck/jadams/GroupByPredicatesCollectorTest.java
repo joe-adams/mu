@@ -23,6 +23,7 @@ public class GroupByPredicatesCollectorTest {
         Predicate<Integer> odd=even.negate();
         preds.add(even);
         preds.add(odd);
+        preds.stream();
         Map<Predicate<Integer>, List<Integer>> map= IntStream.rangeClosed(1, 10).boxed().collect(GroupByPredicatesCollector.get(preds));
         assertEquals(map.get(even).size(),5);
         assertEquals(map.get(odd).size(),5);

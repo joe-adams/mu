@@ -6,15 +6,16 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by Joe on 8/23/2015.
  */
 public class GroupByPredicatesCollector {
 
-    public static <V> Collector<V, Map<Predicate<V>,List<V>>,Map<Predicate<V>,List<V>>> get(List<Predicate<V>> predicates){
+    public static <V> Collector<V, ?,Map<Predicate<V>,List<V>>> get(List<Predicate<V>> predicates){
         Function<V,Predicate<V>> mapFunction=(v)->GroupByPredicatesCollector.getFromList(predicates,v);
-        return GroupByCollector.get(mapFunction);
+        return GroupByCollector.groupBy(mapFunction);
     }
 
     private static <V> Predicate<V> getFromList(List<Predicate<V>> predicates,V value){

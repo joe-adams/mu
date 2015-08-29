@@ -1,5 +1,6 @@
 package org.bitbuck.jadams;
 
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
@@ -34,7 +35,7 @@ public class MuCollecterImpl<T, A, R> implements Collector<T, A, R> {
             private BiConsumer<A, T> accumulator;
             private BinaryOperator<A> combiner;
             private Function<A, R> finisher;
-            private Set<Characteristics> characteristics;
+            private Set<Characteristics> characteristics= EnumSet.noneOf(Characteristics.class);
 
             public Builder<T, A, R> setSupplier(Supplier<A> supplier) {
                 this.supplier = supplier;
@@ -59,6 +60,15 @@ public class MuCollecterImpl<T, A, R> implements Collector<T, A, R> {
             public Builder<T, A, R> setCharacteristics(Set<Characteristics> characteristics) {
                 this.characteristics = characteristics;
                 return this;
+            }
+
+            public Builder<T, A, R> addCharacteristic(Characteristics characteristic) {
+                this.characteristics.add(characteristic);
+                return this;
+            }
+
+            public void clearCharacteristics(){
+                this.characteristics= EnumSet.noneOf(Characteristics.class);
             }
 
             public MuCollecterImpl<T, A, R> build(){

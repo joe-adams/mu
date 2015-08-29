@@ -3,6 +3,7 @@ package org.bitbuck.jadams;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 /**
@@ -10,15 +11,35 @@ import java.util.stream.Collector;
  */
 public class IndexByCollector {
 
-    final private static Set<Collector.Characteristics> characteristics= EnumSet.of(Collector.Characteristics.UNORDERED, Collector.Characteristics.IDENTITY_FINISH);
 
-    public static <K,V> Collector<V, Map<K,V>,Map<K,V>> get(Function<V,K> mapFunction){
-        return new MuCollecterImpl.Builder<V, Map<K,V>,Map<K,V>>()
-                .setAccumulator(accumulator(mapFunction))
-                .setCharacteristics(characteristics)
+    public static <K,V> Collector<V, ?,Map<K,V>> indexBy(Function<V, K> mapFunction){
+        return getBuilder(mapFunction)
+                .build();
+    }
+
+    public static <K,V> Collector<Map.Entry<K,V>,?,Map<K,V>> mapFromEntries(Supplier<Map<K,V>> supplier){
+        return new MuCollecterImpl.Builder<Map.Entry<K,V>, Map<K,V>,Map<K,V>>()
+                .setAccumulator(IndexByCollector::mapAccumulator)
+                .setSupplier(supplier)
                 .setCombiner(IndexByCollector::combiner)
                 .setFinisher(Function.identity())
-                .setSupplier(HashMap::new).build();
+                .addCharacteristic(Collector.Characteristics.UNORDERED)
+                .addCharacteristic(Collector.Characteristics.IDENTITY_FINISH).build();
+    }
+
+    private static <K,V> void mapAccumulator(Map<K, V> map, Map.Entry<K, V> entry){
+        addKVorThrow(map,entry.getKey(),entry.getValue());
+    }
+
+
+    public static <K,V> MuCollecterImpl.Builder getBuilder(Function<V,K> mapFunction){
+        return new MuCollecterImpl.Builder<V, Map<K,V>,Map<K,V>>()
+                .setAccumulator(accumulator(mapFunction))
+                .setSupplier(HashMap::new)
+                .setCombiner(IndexByCollector::combiner)
+                .setFinisher(Function.identity())
+                .addCharacteristic(Collector.Characteristics.IDENTITY_FINISH)
+                .addCharacteristic(Collector.Characteristics.UNORDERED);
     }
 
 
