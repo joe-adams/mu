@@ -19,6 +19,16 @@ public class MapCollector {
         return getBuilder(keyFunction,valueFunction,supplier).build();
     }
 
+    public static <K,V> Collector<V, Map<K, List<V>>, Map<K, Integer>> countBy(Function<V, K> keyFunction){
+    	 Function<Map<K,List<V>>,Map<K,Integer>> finisher=(grouped)-> MapStream.fromMap(grouped).mapValue((l)->l.size()).collectMap(HashMap::new);
+        return new MuCollecterImpl.Builder<V, Map<K,List<V>>,Map<K,Integer>>()
+                .setAccumulator(accumulator(keyFunction, Function.identity()))
+                .setSupplier(HashMap::new)
+                .setCombiner(MapCollector::combiner)
+                .setFinisher(finisher)
+                .addCharacteristic(Collector.Characteristics.UNORDERED).build();
+    }
+    
     public static <K,V> Collector<V, ?,Map<K,List<V>>> groupBy(Function<V,K> keyFunction){
         return groupBy(keyFunction, HashMap<K, List<V>>::new);
     }
@@ -30,7 +40,7 @@ public class MapCollector {
         return mapCollector(((entry)->entry.getKey()),((entry)->entry.getValue()),supplier);
     }
 
-    public static <E,K,V> MuCollecterImpl.Builder<E, Map<K,List<V>>,Map<K,List<V>>> getBuilder(Function<E,K> keyFunction,Function<E,V> valueFunction,Supplier<Map<K,List<V>>> supplier){
+    public static <E,K,V> MuCollecterImpl.Builder<E, ?,Map<K,List<V>>> getBuilder(Function<E,K> keyFunction,Function<E,V> valueFunction,Supplier<Map<K,List<V>>> supplier){
         return new MuCollecterImpl.Builder<E, Map<K,List<V>>,Map<K,List<V>>>()
                 .setAccumulator(accumulator(keyFunction, valueFunction))
                 .setSupplier(supplier)

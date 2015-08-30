@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class GroupByCollectorTest {
+public class MapCollectorTest {
 	
 	private static class Emp{
 		final private String name;
@@ -64,7 +64,7 @@ public class GroupByCollectorTest {
 		assertTrue(grouped.keySet().contains("accounting"));
 		assertTrue(grouped.keySet().contains("sales"));
 		assertTrue(grouped.keySet().contains(null));
-		assertEquals(grouped.get("accounting").size(),2);
+		assertEquals(grouped.get("accounting").size(), 2);
 		assertEquals(grouped.get("sales").size(),1);
 		assertEquals(grouped.get("management").size(),1);
 		assertEquals(grouped.get(null).size(),1);
@@ -73,6 +73,24 @@ public class GroupByCollectorTest {
 		assertTrue(grouped.get("sales").contains(laura));
 		assertTrue(grouped.get(null).contains(bill));
 		assertTrue(grouped.get("management").contains(gus));
+	}
+
+	@Test
+	public void testCountBy(){
+		Emp joe=new Emp("Joe","accounting");
+		Emp laura=new Emp("Laura","sales");
+		Emp gus=new Emp("Gus","management");
+		Emp sally=new Emp("Sally","accounting");
+		Emp bill=new Emp("Bill","sales");
+		Stream<Emp> stream=Stream.of(joe,sally,bill,laura,gus);
+		Map<String,Integer> grouped=stream.collect(MapCollector.countBy((Emp emp) -> emp.getDepartment()));
+		assertEquals(grouped.keySet().size(), 3);
+		assertTrue(grouped.keySet().contains("accounting"));
+		assertTrue(grouped.keySet().contains("sales"));
+		assertTrue(grouped.keySet().contains("management"));
+		assertEquals(grouped.get("accounting"),new Integer(2));
+		assertEquals(grouped.get("sales"),new Integer(2));
+		assertEquals(grouped.get("management"),new Integer(1));
 	}
 
 }

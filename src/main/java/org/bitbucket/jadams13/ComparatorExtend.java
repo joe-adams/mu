@@ -85,4 +85,6 @@ public interface ComparatorExtend {
         }).reduce((c1,c2)->c1.thenComparing(c2)).orElse((c1, c2) -> 0);
     }
 
+
+
 }

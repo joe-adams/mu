@@ -13,6 +13,9 @@ public class MapStream<K,V> extends ForwardingStreamImpl<Map.Entry<K,V>> {
         super(delegate);
     }
 
+    public static <K,V> MapStream<K,V> fromMap(Map<K,V> map){
+        return new MapStream<K,V>(map.entrySet().stream());
+    }
     private <R,S> MapStream<R,S> toMapStream(Stream<Map.Entry<R,S>> stream){
         if (stream instanceof MapStream){
             return (MapStream<R,S>) stream;
@@ -28,7 +31,6 @@ public class MapStream<K,V> extends ForwardingStreamImpl<Map.Entry<K,V>> {
     public Map<K,List<V>> collectMapList(Supplier<Map<K,List<V>>> supplier){
         return getDelegate().collect(MapCollector.mapFromEntries(supplier));
     }
-
 
     public MapStream<K, V> filterKey(Predicate<? super K> predicate) {
         return toMapStream(getDelegate().filter(keyPredicate(predicate)));

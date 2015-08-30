@@ -20,7 +20,7 @@ public class ForwardingStreamImpl<T> implements ForwardingStream<T> {
 
     
     @Override
-    public <R> ForwardingStream<R> fromDelegate(Stream<R> stream) {
+    public <R> ForwardingStream<R> fromDelegate(Stream<R> stream){
         if (stream instanceof ForwardingStream){
             return (ForwardingStream<R>) stream;
         }

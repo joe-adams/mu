@@ -1,9 +1,6 @@
 package org.bitbucket.jadams13;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
@@ -15,7 +12,10 @@ public interface ForwardingStream<T> extends Stream<T> {
     Stream<T> getDelegate();
 
     <R> ForwardingStream<R> fromDelegate(Stream<R> stream);
-    
+
+    default <R> ForwardingStream<R> mapAsForwardingStream(Function<? super T, ? extends R> function) {
+        return fromDelegate(getDelegate().map(function));
+    }
 
     @Override
     default ForwardingStream<T> filter(Predicate<? super T> predicate) {
@@ -23,8 +23,8 @@ public interface ForwardingStream<T> extends Stream<T> {
     }
 
     @Override
-    default <R> ForwardingStream<R> map(Function<? super T, ? extends R> function) {
-        return fromDelegate(getDelegate().map(function));
+    default <R> Stream<R> map(Function<? super T, ? extends R> function) {
+        return getDelegate().map(function);
     }
 
     @Override
