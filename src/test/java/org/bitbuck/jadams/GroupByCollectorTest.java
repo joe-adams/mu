@@ -1,5 +1,6 @@
 package org.bitbuck.jadams;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -36,7 +37,7 @@ public class GroupByCollectorTest {
 		Emp sally=new Emp("Sally","accounting");
 		Emp bill=new Emp("Bill","sales");
 		Stream<Emp> stream=Stream.of(joe,sally,bill,laura,gus);
-		Map<String,List<Emp>> grouped=stream.collect(GroupByCollector.groupBy((Emp emp) -> emp.getDepartment()));
+		Map<String,List<Emp>> grouped=stream.collect(MapCollector.groupBy((Emp emp) -> emp.getDepartment()));
 		assertEquals(grouped.keySet().size(),3);
 		assertTrue(grouped.keySet().contains("accounting"));
 		assertTrue(grouped.keySet().contains("sales"));
@@ -59,7 +60,7 @@ public class GroupByCollectorTest {
 		Emp sally=new Emp("Sally","accounting");
 		Emp bill=new Emp("Bill",null);
 		Stream<Emp> stream=Stream.of(joe,sally,bill,laura,gus);
-		Map<String,List<Emp>> grouped=stream.collect(GroupByCollector.groupBy((Emp emp) -> emp.getDepartment()));
+		Map<String,List<Emp>> grouped=stream.collect(MapCollector.groupBy((Emp emp) -> emp.getDepartment()));
 		assertEquals(grouped.keySet().size(),4);
 		assertTrue(grouped.keySet().contains("accounting"));
 		assertTrue(grouped.keySet().contains("sales"));

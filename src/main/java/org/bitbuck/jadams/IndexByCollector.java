@@ -17,7 +17,7 @@ public class IndexByCollector {
                 .build();
     }
 
-    public static <K,V> Collector<Map.Entry<K,V>,?,Map<K,V>> mapFromEntries(Supplier<Map<K,V>> supplier){
+    public static <K,V> Collector<Map.Entry<K,V>,?,Map<K,V>> mapFromEntries1(Supplier<Map<K,V>> supplier){
         return new MuCollecterImpl.Builder<Map.Entry<K,V>, Map<K,V>,Map<K,V>>()
                 .setAccumulator(IndexByCollector::mapAccumulator)
                 .setSupplier(supplier)
@@ -27,6 +27,15 @@ public class IndexByCollector {
                 .addCharacteristic(Collector.Characteristics.IDENTITY_FINISH).build();
     }
 
+    public static <K,V> Collector<Map.Entry<K,V>,?,Map<K,V>> mapFromEntries(Supplier<Map<K,V>> supplier){
+        return new MuCollecterImpl.Builder<Map.Entry<K,V>, Map<K,V>,Map<K,V>>()
+                .setAccumulator(IndexByCollector::mapAccumulator)
+                .setSupplier(supplier)
+                .setCombiner(IndexByCollector::combiner)
+                .setFinisher(Function.identity())
+                .addCharacteristic(Collector.Characteristics.UNORDERED)
+                .addCharacteristic(Collector.Characteristics.IDENTITY_FINISH).build();
+    }
     private static <K,V> void mapAccumulator(Map<K, V> map, Map.Entry<K, V> entry){
         addKVorThrow(map,entry.getKey(),entry.getValue());
     }
