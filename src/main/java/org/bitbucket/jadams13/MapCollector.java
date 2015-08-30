@@ -1,4 +1,4 @@
-package org.bitbuck.jadams;
+package org.bitbucket.jadams13;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -20,7 +20,7 @@ public class MapCollector {
     }
 
     public static <K,V> Collector<V, ?,Map<K,List<V>>> groupBy(Function<V,K> keyFunction){
-        return groupBy(keyFunction, HashMap<K,List<V>>::new);
+        return groupBy(keyFunction, HashMap<K, List<V>>::new);
     }
     public static <K,V> Collector<V, ?,Map<K,List<V>>> groupBy(Function<V,K> keyFunction,Supplier<Map<K,List<V>>> supplier){
         return mapCollector(keyFunction, Function.identity(),supplier);

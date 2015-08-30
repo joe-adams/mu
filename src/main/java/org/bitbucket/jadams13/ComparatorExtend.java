@@ -1,10 +1,8 @@
-package org.bitbuck.jadams;
+package org.bitbucket.jadams13;
 
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
