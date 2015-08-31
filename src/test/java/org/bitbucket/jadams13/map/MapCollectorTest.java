@@ -1,9 +1,10 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.map;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.bitbucket.jadams13.map.MapCollector;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

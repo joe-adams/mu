@@ -1,4 +1,4 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
+import org.bitbucket.jadams13.map.GroupByPredicatesCollector;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

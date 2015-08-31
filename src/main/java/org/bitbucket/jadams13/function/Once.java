@@ -1,4 +1,4 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.function;
 
 import java.util.Optional;
 import java.util.function.Supplier;

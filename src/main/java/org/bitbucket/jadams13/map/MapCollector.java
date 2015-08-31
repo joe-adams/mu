@@ -1,4 +1,7 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.map;
+
+import org.bitbucket.jadams13.util.MuCollecterImpl;
+import org.bitbucket.jadams13.util.Util;
 
 import java.util.*;
 import java.util.function.BiConsumer;

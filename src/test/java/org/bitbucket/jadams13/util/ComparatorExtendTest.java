@@ -1,5 +1,6 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.util;
 
+import org.bitbucket.jadams13.util.ComparatorExtend;
 import org.junit.Test;
 
 import java.util.Comparator;
@@ -47,7 +48,7 @@ public class ComparatorExtendTest {
         C fourth=new C("b",1,"a");
 
         Stream<Function<C,Comparable>> stream=Stream.of(((C c) -> c.getOne()), ((C d) -> d.getTwo()), ((C d) -> d.getThree()));
-        Comparator<C> comparator=ComparatorExtend.compareByKeys(stream);
+        Comparator<C> comparator= ComparatorExtend.compareByKeys(stream);
         //Comparator<C> comparator=ComparatorExtend.compareByKeys(Stream.of(((C c) -> c.getOne()), ((C d) -> d.getTwo()), ((C d) -> d.getThree())));
         List<C> cs=Stream.of(second,third,first,fourth).sorted(comparator).collect(Collectors.toList());
         assertEquals(cs.get(0),first);

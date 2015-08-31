@@ -1,5 +1,6 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.function;
 
+import org.bitbucket.jadams13.function.Once;
 import org.junit.Test;
 
 import java.util.ArrayList;

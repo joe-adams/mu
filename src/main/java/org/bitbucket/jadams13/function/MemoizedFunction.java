@@ -1,4 +1,4 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.function;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

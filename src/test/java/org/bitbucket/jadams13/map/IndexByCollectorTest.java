@@ -1,5 +1,6 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.map;
 
+import org.bitbucket.jadams13.map.IndexByCollector;
 import org.junit.Test;
 
 import java.util.Map;

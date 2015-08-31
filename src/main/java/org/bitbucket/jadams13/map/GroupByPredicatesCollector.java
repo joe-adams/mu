@@ -1,4 +1,4 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.map;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package org.bitbucket.jadams13;
+package org.bitbucket.jadams13.util;
 
 import java.util.stream.Stream;
 
