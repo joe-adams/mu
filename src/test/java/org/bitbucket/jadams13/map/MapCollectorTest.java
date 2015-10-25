@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import org.bitbucket.jadams13.map.MapCollector;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -37,7 +36,7 @@ public class MapCollectorTest {
 		Emp sally=new Emp("Sally","accounting");
 		Emp bill=new Emp("Bill","sales");
 		Stream<Emp> stream=Stream.of(joe,sally,bill,laura,gus);
-		Map<String,List<Emp>> grouped=stream.collect(MapCollector.groupBy((Emp emp) -> emp.getDepartment()));
+		Map<String,List<Emp>> grouped=stream.collect(MapCollectors.groupBy((Emp emp) -> emp.getDepartment()));
 		assertEquals(grouped.keySet().size(),3);
 		assertTrue(grouped.keySet().contains("accounting"));
 		assertTrue(grouped.keySet().contains("sales"));
@@ -60,7 +59,7 @@ public class MapCollectorTest {
 		Emp sally=new Emp("Sally","accounting");
 		Emp bill=new Emp("Bill",null);
 		Stream<Emp> stream=Stream.of(joe,sally,bill,laura,gus);
-		Map<String,List<Emp>> grouped=stream.collect(MapCollector.groupBy((Emp emp) -> emp.getDepartment()));
+		Map<String,List<Emp>> grouped=stream.collect(MapCollectors.groupBy((Emp emp) -> emp.getDepartment()));
 		assertEquals(grouped.keySet().size(),4);
 		assertTrue(grouped.keySet().contains("accounting"));
 		assertTrue(grouped.keySet().contains("sales"));
@@ -84,7 +83,7 @@ public class MapCollectorTest {
 		Emp sally=new Emp("Sally","accounting");
 		Emp bill=new Emp("Bill","sales");
 		Stream<Emp> stream=Stream.of(joe,sally,bill,laura,gus);
-		Map<String,Integer> grouped=stream.collect(MapCollector.countBy((Emp emp) -> emp.getDepartment()));
+		Map<String,Integer> grouped=stream.collect(MapCollectors.countBy((Emp emp) -> emp.getDepartment()));
 		assertEquals(grouped.keySet().size(), 3);
 		assertTrue(grouped.keySet().contains("accounting"));
 		assertTrue(grouped.keySet().contains("sales"));

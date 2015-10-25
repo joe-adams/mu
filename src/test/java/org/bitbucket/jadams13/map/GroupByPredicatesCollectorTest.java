@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-import org.bitbucket.jadams13.map.GroupByPredicatesCollector;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -25,7 +24,7 @@ public class GroupByPredicatesCollectorTest {
         preds.add(even);
         preds.add(odd);
         preds.stream();
-        Map<Predicate<Integer>, List<Integer>> map= IntStream.rangeClosed(1, 10).boxed().collect(GroupByPredicatesCollector.get(preds));
+        Map<Predicate<Integer>, List<Integer>> map= IntStream.rangeClosed(1, 10).boxed().collect(GroupByPredicatesCollectors.get(preds));
         assertEquals(map.get(even).size(),5);
         assertEquals(map.get(odd).size(),5);
     }
@@ -36,7 +35,7 @@ public class GroupByPredicatesCollectorTest {
         Predicate<Integer> even=(i)->i%2==0;
         Predicate<Integer> odd=even.negate();
         preds.add(even);
-        Map<Predicate<Integer>, List<Integer>> map= IntStream.rangeClosed(1, 10).boxed().collect(GroupByPredicatesCollector.get(preds));
+        Map<Predicate<Integer>, List<Integer>> map= IntStream.rangeClosed(1, 10).boxed().collect(GroupByPredicatesCollectors.get(preds));
         assertEquals(map.get(even).size(), 5);
         assertEquals(map.get(odd).size(), 5);
     }

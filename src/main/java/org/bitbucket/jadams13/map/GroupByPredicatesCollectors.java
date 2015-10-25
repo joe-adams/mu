@@ -10,11 +10,11 @@ import java.util.stream.Collector;
 /**
  * Created by Joe on 8/23/2015.
  */
-public class GroupByPredicatesCollector {
+public class GroupByPredicatesCollectors {
 
     public static <V> Collector<V, ?,Map<Predicate<V>,List<V>>> get(List<Predicate<V>> predicates){
-        Function<V,Predicate<V>> mapFunction=(v)->GroupByPredicatesCollector.getFromList(predicates,v);
-        return MapCollector.groupBy(mapFunction);
+        Function<V,Predicate<V>> mapFunction=(v)-> GroupByPredicatesCollectors.getFromList(predicates, v);
+        return MapCollectors.groupBy(mapFunction);
     }
 
     private static <V> Predicate<V> getFromList(List<Predicate<V>> predicates,V value){

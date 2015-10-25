@@ -1,6 +1,5 @@
 package org.bitbucket.jadams13.map;
 
-import org.bitbucket.jadams13.map.IndexByCollector;
 import org.junit.Test;
 
 import java.util.Map;
@@ -16,7 +15,7 @@ public class IndexByCollectorTest {
 
     @Test
     public void testIndexBy(){
-        Map<Integer,Integer> map=Stream.of(new Integer(0), new Integer(1),new Integer(2)).collect(IndexByCollector.indexBy(Function.identity()));
+        Map<Integer,Integer> map=Stream.of(new Integer(0), new Integer(1),new Integer(2)).collect(IndexByCollectors.indexBy(Function.identity()));
         assertEquals(map.size(),3);
         assertEquals(map.get(new Integer(0)),new Integer(0));
         assertEquals(map.get(new Integer(1)),new Integer(1));
@@ -25,6 +24,6 @@ public class IndexByCollectorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testThrows(){
-        Map<Integer,Integer> map=Stream.of(new Integer(0), new Integer(0),new Integer(2)).collect(IndexByCollector.indexBy(Function.identity()));
+        Map<Integer,Integer> map=Stream.of(new Integer(0), new Integer(0),new Integer(2)).collect(IndexByCollectors.indexBy(Function.identity()));
     }
 }

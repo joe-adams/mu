@@ -27,11 +27,11 @@ public class MapStream<K,V> extends ForwardingStreamImpl<Map.Entry<K,V>> {
 
 
     public Map<K,V> collectMap(Supplier<Map<K,V>> supplier){
-        return getDelegate().collect(IndexByCollector.mapFromEntries(supplier));
+        return getDelegate().collect(IndexByCollectors.mapFromEntries(supplier));
     }
 
     public Map<K,List<V>> collectMapList(Supplier<Map<K,List<V>>> supplier){
-        return getDelegate().collect(MapCollector.mapFromEntries(supplier));
+        return getDelegate().collect(MapCollectors.mapFromEntries(supplier));
     }
 
     public MapStream<K, V> filterKey(Predicate<? super K> predicate) {

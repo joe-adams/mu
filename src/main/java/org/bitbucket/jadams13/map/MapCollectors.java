@@ -12,7 +12,7 @@ import java.util.stream.Collector;
 /**
  * Created by Joe on 8/23/2015.
  */
-public class MapCollector {
+public class MapCollectors {
 
     public static <E,K,V> Collector<E, ?,Map<K,List<V>>> mapCollector(Function<E, K> keyFunction,Function<E,V>valueFunction){
         return mapCollector(keyFunction,valueFunction,HashMap<K,List<V>>::new);
@@ -27,7 +27,7 @@ public class MapCollector {
         return new MuCollecterImpl.Builder<V, Map<K,List<V>>,Map<K,Integer>>()
                 .setAccumulator(accumulator(keyFunction, Function.identity()))
                 .setSupplier(HashMap::new)
-                .setCombiner(MapCollector::combiner)
+                .setCombiner(MapCollectors::combiner)
                 .setFinisher(finisher)
                 .addCharacteristic(Collector.Characteristics.UNORDERED).build();
     }
@@ -47,7 +47,7 @@ public class MapCollector {
         return new MuCollecterImpl.Builder<E, Map<K,List<V>>,Map<K,List<V>>>()
                 .setAccumulator(accumulator(keyFunction, valueFunction))
                 .setSupplier(supplier)
-                .setCombiner(MapCollector::combiner)
+                .setCombiner(MapCollectors::combiner)
                 .setFinisher(Function.identity())
                 .addCharacteristic(Collector.Characteristics.IDENTITY_FINISH)
                 .addCharacteristic(Collector.Characteristics.UNORDERED);
